@@ -57,8 +57,8 @@ sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libp
  2.  执行cmake命令：
 
  ```bash
- cmake -D CMAKE_BUILD_TYPE =RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local
- ```    
+ cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+ ```
  上面的`CMAKE_BUILD_TYPE =RELEASE`指明编译的版本是Release版，`CMAKE_INSTALL_PREFIX=/usr/local`指明编译后的可执行程序的存放目录。
 
  3.  执行make和install：

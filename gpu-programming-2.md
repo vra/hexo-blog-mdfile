@@ -18,18 +18,29 @@ tags:
  SIMD(Single Instruction Multiple Data),   
  MISD(Multiple Instruction Single Data),  
  MIMD(Multiple Instruction Multiple Data),  
- 由 SISD,SIMD，MISD，MIMD组成的矩阵就是Flynn矩阵。从前往后，4中结构越来越复杂。 
+ 由 SISD,SIMD，MISD，MIMD组成的矩阵就是Flynn矩阵。从前往后，4种结构越来越复杂。 
  2. 共享存储和分布式存储   
  3. 通信和同步  
  4. 加速比，并行开销，拓展性
 
 <!--more-->
- 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script> 
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
 ### Amdahl定律
   $$1. speed rate = \frac{1}{1-P} $$
-其中P是可以并行的部分，即加速比与任务的不可并行的部分的大小成正比，如果完全不可并行，即P = 0，则speed rate = 1，即不加速；如果完全可以并行，即P = 1, 则$speed rate = \\infty$, 即加速无穷大倍。 
+其中P是可以并行的部分，即加速比与任务中不可并行部分的大小成正比，如果完全不可并行，即P = 0，则speed rate = 1，即不加速；如果完全可以并行，即P = 1, 则$speed rate = \\infty$, 即加速无穷大倍。 
   $$2. speed rate = \frac{1}{\frac{P}{N} + S} $$
  其中N是处理器个数，P是可以并行的部分，S是不可以并行，只能串行的部分。可以看到，当N趋近无穷时，speed rate 只取决于S，即不可并行部分是系统的瓶颈所在。 
 
