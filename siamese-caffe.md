@@ -5,15 +5,15 @@ tags:
  - Siamese Network
  - 深度学习
 ---
-Siamese原意是"泰国的,泰国人",而与之相关的一个比较常见的词是"Siamese twin", 意思是是"连体双胞胎",所以Siamemse Network是从这个意思转变而来,指的是结构非常相似的两路网络,分别训练,**但共享各个层的参数**,在最后有一个连接的部分.Siamese网络对于相似性比较的场景比较有效.此外Siamese因为共享参数,所以能减少训练过程中的参数个数.[这里](http://vision.ia.ac.cn/zh/senimar/reports/Siamese-Network-Architecture-and-Applications-in-Computer-Vision.pdf)的slides讲解了Siamese网络在深度学习中的应用.这里我参照Caffe中的[Siamese文档](https://github.com/BVLC/caffe/tree/master/examples/siamese), 以LeNet为例,简单地总结下Caffe中Siamese网络的prototxt文件的写法.  
+Siamese原意是"泰国的，泰国人"，而与之相关的一个比较常见的词是"Siamese twin"， 意思是是"连体双胞胎"，所以Siamemse Network是从这个意思转变而来，指的是结构非常相似的两路网络，分别训练，**但共享各个层的参数**，在最后有一个连接的部分。Siamese网络对于相似性比较的场景比较有效。此外Siamese因为共享参数，所以能减少训练过程中的参数个数。[这里](http://vision.ia.ac.cn/zh/senimar/reports/Siamese-Network-Architecture-and-Applications-in-Computer-Vision.pdf)的slides讲解了Siamese网络在深度学习中的应用。这里我参照Caffe中的[Siamese文档](https://github.com/BVLC/caffe/tree/master/examples/siamese)， 以LeNet为例，简单地总结下Caffe中Siamese网络的prototxt文件的写法。 
 <!--more-->
 
 ###1. Data层
-Data层输入可以是LMDB和LevelDB格式的数据,这种格式的数据可以通过参照`$CAFFE_ROOT/examples/siamese/create_mnist_siamese.sh`来生成（该脚本是从MNIST原先的格式生成DB文件,如果要从JPEG格式的图片来生成DB文件,需要进行一定的修改）.  
-Data层有2个输出,一个是`pair_data`,表示配对好的图片对;另一个是`sim`,表示图片对是否属于同一个label.  
+Data层输入可以是LMDB和LevelDB格式的数据，这种格式的数据可以通过参照`$CAFFE_ROOT/examples/siamese/create_mnist_siamese.sh`来生成（该脚本是从MNIST原先的格式生成DB文件，如果要从JPEG格式的图片来生成DB文件，需要进行一定的修改）。  
+Data层有2个输出，一个是`pair_data`，表示配对好的图片对;另一个是`sim`，表示图片对是否属于同一个label。 
 
 ###2. Slice层
-Slice层是Caffe中的一个工具层,功能就是把输入的层(bottom)切分成几个输出层(top).官网给出的如下例子:
+Slice层是Caffe中的一个工具层，功能就是把输入的层(bottom)切分成几个输出层(top)。官网给出的如下例子:
 ```bash
 layer {
   name: "slicer_label"
@@ -30,13 +30,13 @@ layer {
   }
 }
 ```
-完成的功能就是把slicer_label划分成3份.`axis`表示划分的维度,这里1表示在第二个维度上划分;`slice_point`表示划分的中间的点,分别是`1`,`2`表示在1-2层和2-3层之间进行一个划分.  
-在Siamese网络中,为了对数据对进行单独的训练,需要在Data层后面接一个Slice层,将数据均匀地划分为2个部分.  
+完成的功能就是把slicer_label划分成3份。`axis`表示划分的维度，这里1表示在第二个维度上划分;`slice_point`表示划分的中间的点，分别是`1`，`2`表示在1-2层和2-3层之间进行一个划分。
+在Siamese网络中，为了对数据对进行单独的训练，需要在Data层后面接一个Slice层，将数据均匀地划分为2个部分。 
 
 ###3. 共享层
-后面的卷积层,Pooling层,Relu层对于两路网络是没有区别的,所以可以直接写好一路后,复制一份在后面作为另一路,不过得将name,bottom和top的名字改成不一样的(示例中第二路的名字都是在第一路对应层的名字后面加了个`_p`表示pair).  
+后面的卷积层，Pooling层，Relu层对于两路网络是没有区别的，所以可以直接写好一路后，复制一份在后面作为另一路，不过得将name，bottom和top的名字改成不一样的(示例中第二路的名字都是在第一路对应层的名字后面加了个`_p`表示pair)。 
 ###4. 如何共享参数
-两路网络如何共享参数呢？Caffe里是这样实现的:在每路中对应的层里面都定义一个同名的参数,这样更新参数的时候就可以共享参数了.如下面的例子:
+两路网络如何共享参数呢？Caffe里是这样实现的:在每路中对应的层里面都定义一个同名的参数，这样更新参数的时候就可以共享参数了。如下面的例子:
 ```bash
 ...
 
@@ -67,10 +67,10 @@ layer {
 ...
 
 ```
-上面例子中,两路网络对应层都定义了`ip2_w`的参数,这样训练的时候就可以共享这个变量的值了.  
+上面例子中，两路网络对应层都定义了`ip2_w`的参数，这样训练的时候就可以共享这个变量的值了。 
 
 ###5. feature层
-在2个全连接层后,我们将原来的分类的sofatmax层改为输出一个2维向量的全连接层:
+在2个全连接层后，我们将原来的分类的sofatmax层改为输出一个2维向量的全连接层:
 ```bash
 layer {                                                                         
   name: "feat"                                                                  
@@ -98,7 +98,7 @@ layer {
 ```
 
 ###6. ContrastiveLoss层
-在两个feature产生后,就可以利用2个feature和前面定义的`sim`来计算loss了.Siamese网络采用了一个叫做["ContrastiveLoss"](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf)的loss计算方式,如果两个图片越相似,则loss越小;如果越不相似,则loss越大.
+在两个feature产生后，就可以利用2个feature和前面定义的`sim`来计算loss了。Siamese网络采用了一个叫做["ContrastiveLoss"](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf)的loss计算方式，如果两个图片越相似，则loss越小;如果越不相似，则loss越大。
 ```bash
 layer {                                                                         
   name: "loss"                                                                  
@@ -114,7 +114,7 @@ layer {
 ```
 
 ###7. 网络结构的可视化
-上面就是所有的网络结构,利用`$CAFFE_ROOT/python/draw_net.py`这个脚本可以画出网络结构,如图所示:
+上面就是所有的网络结构，利用`$CAFFE_ROOT/python/draw_net.py`这个脚本可以画出网络结构，如图所示:
 ![Lenet的Siamese网络结构](http://7xlt5t.com1.z0.glb.clouddn.com/prototxt.jpg)
 
 整个网络的完整内容如下:
@@ -470,7 +470,7 @@ layer {
 }
 ```
 ###8. 训练过程
-训练过程与别的网络是一样的,这里就不具体展开了.
+训练过程与别的网络是一样的，这里就不具体展开了。
 
 ###9. 参考内容
  1. <https://www.quora.com/What-are-Siamese-neural-networks-what-applications-are-they-good-for-and-why>

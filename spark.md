@@ -9,7 +9,7 @@ tags:
 ##概述
 这篇文章是我通过学习了Spark官网上的一些内容，参考了许多博客和文章，也尝试进行了一些初级的Spark编程后写的关于Spark的简要的说明，希望能讲明白Spark这个框架的一些原理，提供一个基础的入门教程。  
 
-![Spark logo](http://spark.apache.org/images/spark-logo-trademark.png)    
+![](http://spark.apache.org/images/spark-logo-trademark.png)    
 
 <!--more-->
 

@@ -38,6 +38,12 @@ mod_wsgi可以通过pip安装，但是需要提前在系统安装`apache-dev`包
 ```bash 
 sudo apt-get install apache2-prefork-dev
 ```
+此外，还需要安装`python-dev`包，如果要使用python3,则需要安装`python3-dev`包：
+```bash
+sudo apt-get install python-dev
+# 如果要使用python3，则安装如下包
+#sudo apt-get install python3-dev
+```
 然后pip 安装mod_wsgi:
 ```bash
 sudo pip install mod_wsgi
@@ -51,6 +57,7 @@ cd mod_wsgi-4.5.3
 make  
 sudo make install  
 ```
+如果要使用python3,则`./configure`那条命令改为`./configure --with-python=/usr/bin/python3.4`。
 如果没有报错，那么mod_wsgi就编译好了!
 **编译好后，会在apache的模块目录`/usr/lib/apache2/modules/`生成mod_wsgi.so文件。**
 ###4.Apache配置文件目录结构
@@ -116,7 +123,7 @@ application = get_wsgi_application()
 接下来修改`settings.py`文件，主要修改的地方有3个：
  1. 将`DEBUG=True`改为`DEBUG=False`
  2. 将`ALLOWEND_HOSTS`里面写上服务器的访问域名或IP地址
- 3. 将`TEMPALTES`中的`APP_DIRS`该写成指向模板目录的绝对路径
+ 3. 将`TEMPALTES`中的`DIRS`改写成指向模板目录的绝对路径
 Django项目里面需要修改的就这2个文件，下面的内容都是在`/etc/apache2`目录下进行操作。  
 
 ####2. 在/etc/apache2/sites-available目录下增加网站的配置文件

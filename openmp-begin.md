@@ -8,7 +8,7 @@ tags:
 
 在这学期的并行计算课程中，老师讲了OpenMP,MPI，CUDA这3种并行计算编程模型，我打算把相关的知识点记录下来，便于以后用到的时候查阅。  
 
-![openmp log](http://www.openmp.org/wp-content/uploads/openmp-menu-logo.jpg)
+![](http://www.openmp.org/wp-content/uploads/openmp-menu-logo.jpg)
 
 <!--more-->
 ##概述
