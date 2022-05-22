@@ -6,7 +6,7 @@ tags:
  - Python
 ---
 
-##概述
+## 概述
 这篇文章是我通过学习了Spark官网上的一些内容，参考了许多博客和文章，也尝试进行了一些初级的Spark编程后写的关于Spark的简要的说明，希望能讲明白Spark这个框架的一些原理，提供一个基础的入门教程。  
 
 ![](http://spark.apache.org/images/spark-logo-trademark.png)    
@@ -55,14 +55,14 @@ if __name__ == "__main__":
 
 上面这部分内容是关于Spark的一个大概的介绍，**下面，我将从核心概念，集群模型和编程体验这三个大的方向进行详细的说明和我的理解。注意：下面的示例都以Spark的Python API为例。**
 
-##核心概念
-##1. SparkContext
+## 核心概念
+## 1. SparkContext
 Spark是管理集群和协调集群进程的对象。SparkContext就像任务的分配和总调度师一样，处理数据分配，任务切分这些任务。下图是Spark官网给出的集群之间的逻辑框架图，可以看到SparkContext在Driver程序中运行，这里的Driver就是主进程的意思。Worker Node就是集群的计算节点，计算任务在它们上完成。  
 ![Spark集群逻辑框架](http://spark.apache.org/docs/latest/img/cluster-overview.png)
 
 Spark提供了Scala和Python的交互式命令环境，里面默认会创建一个`SparkContext`变量，并将其重命名为`sc`，所以在交互式环境下，可以用`sc`来方便地调用`SparkContext`的函数集合。下面示例中采用`sc`来代表`SparkContext`。  
 
-###2. RDD
+### 2. RDD
 RDD是Resilient Distributed Datasets的缩写，中文翻译为弹性分布式数据集，它是Spark的数据操作元素，是具有容错性的并行的基本单元。**RDD之于Spark，就相当于array之于Numpy，Matrix之于MatLab，DataFrames之于Pandas。** 很重要的一个点是：RDD天然就是在分布式机器上存储的，比如对于下面这个RDD数据,可能Data1-3是存储在节点1的，Data4-6是存储节点2的，后面的数据也是这样，存储在集群中不同的机器上的。这种碎片化的存储使得任务的并行变得容易。    
 
 ![RDD data](http://img.ptcms.csdn.net/article/201511/25/5655b0ea512a8.jpg)
@@ -77,20 +77,20 @@ dist_data = sc.parallelize(data)
 
 另一种生成RDD的方法是从外部的存储系统进行引用，如可以从硬盘上的文件（像‘data.txt’）,HDFS文件系统，HBase数据库，或者任何的提供Hadoop的InputFormat格式的数据来源都可以。对于各种格式的数据，Spark都有专门的处理函数，像`textFile`用来读取硬盘上的文本文件，按行返回文本中的内容；而`newAPIHadoopRDD`函数则可以保存/读取符合Haddoop输出/输入格式的文件。具体使用规则请参考[Spark编程指南](http://spark.apache.org/docs/latest/programming-guide.html)。  
 
-###3. Action v.s. Transformation
+### 3. Action v.s. Transformation
 RDD支持2种操作，一种是`Transformation`，这种操作的结果是生成一个新的RDD对象，即由RDD生成RDD，如Transformation操作`map`，就是对RDD中的每个数据，对应生成map函数中定义的数据，最后得到的还是一个RDD。举个具体的例子，假设map函数是：对RDD中的每个数据加1，假设原先的数据是[1,3,5,7,9],则这个map函数作用的结果是[2,4,6,8,10],仍然是个RDD（注意：这里为了方便解释，将RDD写出Python中的List形式，实际上要记得这里的RDD数据是保存在不同机器上的）。另一种操作叫做`Action`，这种操作的结果是得到一个值(Value)。即由RDD得到Value。如Action操作`reduce`，假设reduce函数设定为：求RDD中所有元素的和，则对该RDD作用reduce的结果是30,为一个值。  
 
 常见的`Tranformation`操作包括`map，filter，flatMap,mapPartions, mapPartitionsWithIndex, sample, union, intersection, distinct, groupByKey, reduceByKey, aggregateByKey, sortByKey, join, pipe`等。    
 常见的`Action`操作包括`reduce，collect，count，first，take，takeSampke， takeOrdered， countByKey, foreach`等等。  
 
-###4. Lazy Evalution
+### 4. Lazy Evalution
 Spark采用了惰性计算。所谓惰性计算，即对所有`transformation`，不会立即执行，而是等到某个`action`作用的时候，需要向Driver发送结果的时候再执行之前的所有`transformation`。简单来说，就是所有任务都拖到不能再拖的时候再执行。  
 
 惰性计算能提高Spark运行的性能。试想，如果对所有的`transformation`操作，立即计算，然后向Dirver返回结果，则需要发送数目巨大的数据集；而如果采用惰性计算，则只需发送最后的一个值给Driver，传输开销会大大地减小。  
 
 **需要指出的是：在Spark中，所有`transformation`操作都采用惰性模式，而所有`action`都是非惰性模式。**
 
-###5. Closure
+### 5. Closure
 在Spark中执行某一项任务的时候，Spark driver程序会将RDD的的操作分配到各个计算节点上，Spark称这些计算节点为`executor`。而每个executor执行计算的变量和操作就称为这个executor的`Closure`。  
 
 需要注意的是，各个executor的closure是不同的，刚开始的时候数据都从driver程序中克隆过来，之后这些数据就和driver程序中的数据没有任何关系了。这里可以类比`fork`操作，子进程和父进程之间的数据是隔离的，互不影响的。  
@@ -98,7 +98,7 @@ Spark采用了惰性计算。所谓惰性计算，即对所有`transformation`�
 **由于各个executor和driver的数据是不同的，所以涉及到不同节点上同名变量的运算，结果结果是不确定的，也不要依赖于该运算结果。**
 
 
-###6. Shuffle
+### 6. Shuffle
 在Spark中，有的时候为了执行某一个操作，需要从多个节点获取数据到一个节点，然后进行计算。计算后将计算结果再传给相应的计算节点。这个过程中，计算前后对应节点的数据是对应的，即节点1的计算结果还是返回到节点1,但是返回的顺序可能发生了改变，如节点1原先顺序是[2,3,4],可能结果是按[3,2,4]的计算结果返回的，这样就间接地完成了一个打乱顺序的操作，在Spark中称以上这个过程为`shuffle`。
 
 由上述描述可以看出来，Shuffle操作是一个开销比较大的操作，需要较大量的硬盘IO，数据串行化操作，和网络IO。此外，为了在单个节点保存多个节点上传过来的数据，还需要消耗较大的内存空间。  
@@ -106,7 +106,7 @@ Spark采用了惰性计算。所谓惰性计算，即对所有`transformation`�
 此外，Spark内部会隐式地**在硬盘上**保存该过程中产生的中间文件，以便于以后再次使用。过一定时间后，或者数据不再使用时，垃圾回收机器（GC，Garbage Collection）就会删除这些文件。由于GC回收的时间间隔会比较长，所以在运行Spark的过程中会产生很多的中间数据，占据很多的硬盘空间，所以Spark快，是以占据大量内存空间和磁盘空间作为代价的。  
 
 
-###7. Persistance
+### 7. Persistance
 为了加快运行的速度，Spark提供了`persist`和`cache`函数由开发者来显式地缓存RDD数据。在初次执行某个`action`的时候，对RDD数据进行缓存，在以后的`action`操作中，直接读取缓存的RDD数据。这样下来，`action`的执行速度可以提升10倍。  
 Spark的缓存具有容错性，如果一个节点的RDD数据部分丢失了，则Spark会根据生成该部分RDD数据的`transformation`重新生成完全一样的数据。  
 
@@ -117,7 +117,7 @@ Spark的缓存具有容错性，如果一个节点的RDD数据部分丢失了，
 Spark会自动监控缓存数据的使用情况，如果空间不够的话，就会使用最近使用次数最少算法（LRU，Least-Recently -Used）将部分缓存数据给删除掉。如果你想手动删除缓存，可以调用`RDD.unpersist()`函数。  
 
 
-###8. Shared Variables
+### 8. Shared Variables
 通常情况下，当Driver程序给各个cluster节点分配后任务，复制完初始数据后，各个节点就在自己的本地空间上单独进行计算，再也不会和Driver程序之间发送数据了。但是为了几个非常常用的操作，Spark提供了2类共享变量：`broadcast variable`和`accumulator`。  
 
 broadcast变量是一种只读的变量，在driver进程需要向多个机器发送相同数据的时候会用到。并且规定boroadcast变量在广播后不可以被改变。我们可以对变量`v`进行broadcast操作，对其进行广播，然后在各个机器上使用的时候，使用`.value`来读取，而不是直接读取`v`的值。如下例：
@@ -136,10 +136,10 @@ accum.value
 #结果：10
 ```
 
-##集群模型
+## 集群模型
 结束了冗长而且枯燥的概念部分后，下面我来阐述一下关于Spark集群模型的一些理解。  
 
-###1. Cluster模型
+### 1. Cluster模型
 ![Spark Cluster Model](http://spark.apache.org/docs/latest/img/cluster-overview.png)  
 上图是官网给出的Spark集群模型，Driver Program 是主进程，SparkContext运行在它上面，它跟Cluster Manager相连。Driver对Cluster Manager下达任务人，然后由Cluster Manager将任资源分配给各个计算节点(Worker Node)上的`executor`，然后Driver再将应用的代码发送给各个Worker Node。最后，Driver向各个节点发送`Task`来运行。  
 
@@ -149,13 +149,13 @@ accum.value
 > * 在运行过程中，Driver需要随时准备好接收来自各个计算节点的数据，所以对各个executor来说，Driver必须是可寻址的，比如有公网IP，或者如果在同一个局域网的话，有固定的局域网IP。  
 > * 由于Driver需要随时接收消息和数据，所以最好Driver和各个节点比较邻近，这样数据传输会比较快。  
 
-###2. Cluster Manager 类型
+### 2. Cluster Manager 类型
 当前Spark支持3种类型的Cluster Manager,分别是：
 > + `Apache Mesos`： [Mesos](http://spark.apache.org/docs/latest/running-on-mesos.html)是一种通用的的集群管理系统，可以运行Hadoop和别的分布式计算。
 > + `Hadoop YARN`: 这是Hadoop 2 默认的资源管理系统。
 > + `Standalone `-这种类型是Spark单独设计的管理系统，比较简单，也没有太多的需要预先学习的东西。
 
-###3. 概念辨析
+### 3. 概念辨析
 Spark集群模型有许多概念，之间的区别还是需要仔细辨析才能搞清楚。下面是从官方网站上抄录下来的一个定义，因为怕翻译后改变原意所以这里没有翻译，仅给出原文供参考：  
 > * `Application` : User program built on Spark. Consists of a driver program and executors on the cluster.  
 > * `Application jar` : A jar containing the user's Spark application. In some cases users will want to create an "uber jar" containing their application along with its dependencies. The user's jar should never include Hadoop or Spark libraries, however, these will be added at runtime.  
@@ -168,21 +168,21 @@ Spark集群模型有许多概念，之间的区别还是需要仔细辨析才能
 > * `Job` : A parallel computation consisting of multiple tasks that gets spawned in response to a Spark action (e.g. save, collect); you'll see this term used in the driver's logs.
 > * `Stage` : Each job gets divided into smaller sets of tasks called stages that depend on each other (similar to the map and reduce stages in MapReduce); you'll see this term used in the driver's logs.
 
-###4. 资源监控
+### 4. 资源监控
 Spark在运行过程中，会在Driver程序所在机器的4040端口显示关于运行任务，存储情况和工作节点等等的Web UI。对于Standalone模式，在7070端口有类似的信息展示。开发者可以通过访问这个Web UI来了解更多信息。  
 
 集群模型就这些内容，下面以Python编程为例，展示Spark编程的风格和思路。  
 
-##编程体验
+## 编程体验
 在这部分，我以WordCount 和计算PI这2个程序作为例子，描述如何用Python进行Spark编程。
-###1. 下载Spark程序
+### 1. 下载Spark程序
 从[Spark官方下载页面](http://spark.apache.org/downloads.html)选择一个合适版本的Spark。建议在`package type`这一栏选择`Pre-built for Hadoop 2.x and later`，这样下载下来的版本会自带Hadoop相关的东西，不用自己单独再配Hadoop。  
 下载下来后，解压即可：
 ```bash
 tar -xvf spark-*.tgz
 ```
 
-###2. 打开Python命令行
+### 2. 打开Python命令行
 进入解压后的目录，输入`./bin/pyspark`即可打开Python交互式窗口。这里会采用系统默认的Python交互式界面，如果想用体验更好的IPython交互式界面，则可以在输入命令之前设置如下环境变量：
 ```bash
 export PYSPARK_DRIVER_PYTHON=ipython ./bin/pyspark
@@ -190,7 +190,7 @@ export PYSPARK_DRIVER_PYTHON=ipython ./bin/pyspark
 然后输入`./bin/pyspark`即可进入IPython。  
 前面也提到过，在命令行下，SparkContext会自动创建好，并重命名为sc，所以下面可以直接使用sc来进行操作。  
 
-###3. 读取Spark根目录下`REAMDE.md`中出现`Spark`这个单词的行数
+### 3. 读取Spark根目录下`REAMDE.md`中出现`Spark`这个单词的行数
 为了完成这个任务，我们首先读取`README.md`作为RDD数据。还记得RDD吗？这是Spark默认的处理类型，默认就是分布式存储的。读取本地文本文件使用`textFile`函数。
 ```python
 readMeFile = sc.textFile('README.md')
@@ -225,7 +225,7 @@ readMeFile.filter(lambda line : 'Spark' in line).count()
 
 可以看到，很简单吧，下面我们继续来看用Spark来计算Pi值的例子。  
 
-###4. 用Spark计算Pi（采用随机投点法）
+### 4. 用Spark计算Pi（采用随机投点法）
 所谓随机投点法，是根据圆和其外接正方形的面积之比为PI/4，因此我们可以统计在这个单位正方形内随机投点时，落入圆的比例为多少，投点数量足够多时，这个比例近似为PI/4,然后这个比例*4即为PI值。实际投点时，采取第一象限的[0,1]x[0,1]区域即可。  
 首先我们定义一个函数`f`,这个函数进行每次随机投点的统计，是否落在圆内，落在圆内返回1,否则返回0：
 ```python
@@ -386,7 +386,7 @@ f-42dc-88c3-27786460836b/userFiles-ae0a9fc0-65cf-467e-848b-4f3cf4e6e1c2/calc_pi.
 ```
 需要注意的是：Spark自动在本地开了8个进程，来模拟在分布式情况下的计算节点，这样就可以在单机情况下调试适用于分布式情况下的代码了。  
 
-###5. 在分布式环境下部署
+### 5. 在分布式环境下部署
 在单机上调试好程序后，我们就可以将代码部署到分布式的机器上了。**这里有个要求：每个分布式的机器节点上都必须安装相同版本的Spark。**所以第一步就是再各个机器上安装Spark。  
 
 安装完Spark后，我们就可以通过下面的命令来启动各个节点的Spark了：  

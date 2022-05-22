@@ -8,7 +8,7 @@ tags:
 
 <!--more-->
 
-##修改配置文件，增加`static`相关目录
+## 修改配置文件，增加`static`相关目录
 在配置文件`settings.py`里面，增加`STATIC_ROOT`，`STATIC_URL`和`STATICFILES_DIRS`变量，使得程序在执行时知道从哪里读取配置文件：  
 
 ```py
@@ -26,7 +26,7 @@ STATICFILES_DIRS = (
 上面代码中，为了更容易地表示`STATIC_ROOT`的值，先获取了`SITE_ROOT`的值。 
 注意：这个设置只能在`DEBUG=True`，即处于开发状态的的时候才有用，实际生产环境中的配置还有些区别。  
 
-##在app里面创建`static`目录
+## 在app里面创建`static`目录
 在相应的app里面创建好`static`目录，然后将现有项目的`css`和`js`目录拷贝到该目录下。 至于`html`文件，则放在相应的`templates`目录下。 
 
 ## 修改`html`文件里面的`href`引用

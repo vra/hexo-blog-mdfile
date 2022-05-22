@@ -20,7 +20,7 @@ Nvidia的GPU命名有4个层次：
  3. 针对GeForce系列，芯片型号一般是显卡型号+具体编号的形式，如 GeForce GT 705,其中GT 是显卡型号。
  4. 最近新出了一款 TiTan X, 主要要和GeForce GTX Tian X 区分。
 
-##参考：
+## 参考：
  1. <https://chenrudan.github.io/blog/2015/12/20/introductionofgpuhardware.html>
  2. <https://www.quora.com/What-is-NVIDIA-GPU-micro-architecture>
  3. <https://en.wikipedia.org/wiki/List_of_Nvidia_graphics_processing_units>

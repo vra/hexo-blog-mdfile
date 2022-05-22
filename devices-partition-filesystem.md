@@ -11,19 +11,19 @@ tags:
 
 <!--more-->
 
-##设备文件(Device file)
+## 设备文件(Device file)
 
 在类Unix操作系统中,有"[一切皆文件(everything is a file)"的思想](http://en.wikipedia.org/wiki/Everything_is_a_file),当然硬件设备也不例外.在这个思想下,打印机,CD碟片,硬盘,输入输出硬件都被视为一个文件,而这些被视为文件的物理介质就可以称为设备文件.物理介质分为字符设备和块设备,详细的含义见下.除了物理介质,Unix操作系统还有一类设备文件,叫伪设备,这三类设备文件的具体含义是:
 
-###字符设备(Character devices)
+### 字符设备(Character devices)
 
 每次与系统传输数据时,只传输一个字符.没有缓冲区,系统直接从物理设备读取字符.常用于流设备的通信.因为没有缓存,所以只能顺序读取字符,不支持随机读取.像串口和键盘就是字符设备.
 
-###块设备(Block devices)
+### 块设备(Block devices)
 
 与字符设备相反,块设备每次与系统传输数据时,是以块(Block)的方式来传输的.由于以块来读取,所以需要一定读取时间,故常设有缓存区,支持随机读取.常见的块设备有硬盘,CD-ROM驱动器和闪存等.
 
-###伪设备(Pseudo-devices)
+### 伪设备(Pseudo-devices)
 
 前面两种设备文件是物理设备,而伪设备则不是,它们通常是为操作系统提供特定的功能而存在的.常见的伪设备有:
 
@@ -67,7 +67,6 @@ disk             log        mqueue           sda2                tty0      tty24
 dri              loop0      net              sda3                tty1      tty25  tty40  tty56  uinput   vcsa2
 dsp              loop1      network_latency  sda4                tty10     tty26  tty41  tty57  urandom  vcsa3
 ```
-
 可以看到有很多的设备文件,前面提到的`/dev/null`等伪设备也在里面.
 
 对特定类型的设备有特定的前缀,如对硬盘,前缀是`sd`,如`sda`就是第一块硬盘.对终端设备,前缀是`tty`.
@@ -78,7 +77,7 @@ dsp              loop1      network_latency  sda4                tty10     tty26
 
 还有如果你想装双系统,如果不分区,两个操作系统混在一起,可能会发生很多意外,所以分区显得很有必要.
 
-##分区(Partition)
+## 分区(Partition)
 
 从上面我们可以看到,分区其实就像把一个硬盘分成了好几份,就跟把一个大蛋糕切成好几块,一人一块一样.其实从前面的/dev目录下的设备文件我们可以看到,`sda`这个设备被分成了6个分区,分别是`sda1`,`sda2`,....`sda6`.就像有些动物通过撒尿来标记自己领地的边界一样,块设备也有特定的标记分区边界的文件,那就是分区表.分区表就像契约一样,规定了硬盘的前多少个空间分给分区1,后面多少空间分给分区2,等等.可以通过`fdisk`指令来查看分区详情:
 
@@ -107,8 +106,7 @@ Partition table entries are not in disk order
 
 分区完成后,我们就可以在不同的分区上干不同的事情了.我把`sda2`标记为C盘,把`sda3`标记为D盘,把Linux的根目录挂载在`sda6`上,把`/home`目录挂载在`sda5`上,大家互相不再干扰,和谐共处.
 
-
-##文件系统(Filesystem)
+## 文件系统(Filesystem)
 
 在Windows下,我们格式化U盘的时候,会让你选择格式化为FAT16,FAT3或者NTFS等,那么这些东西又是什么东西呢?这些东西就是不同的文件系统格式.
 
@@ -139,5 +137,5 @@ $ sudo blkid
 
 最后用一个图来总结一下:
 
-![filesystem](https://vra.blog.ustc.edu.cn/wp-content/uploads/2014/12/filesystem.png)
+![filesystem](/uploads/2014/12/filesystem.png)
 

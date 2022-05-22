@@ -11,7 +11,7 @@ tags:
 这是一些使用VNC连接服务器的总结，这些操作都是在Ubuntu操作系统下进行的。  
 ![](https://lh6.ggpht.com/RcRUeZKNRYaCfoNGMe8Ic8OORBN-_pXgNyNtvNfSQ-5DFl-7CTuTYC2m96BbbV5IQU0=w300)
 <!--more-->
-###VNC使用 Gnome桌面系统
+### VNC使用 Gnome桌面系统
 安装Gnome桌面：
 ```bash
 sudo apt-get install --no-install-recommends ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal     
@@ -54,7 +54,7 @@ startxfce4 &
 org.gnome.Terminal[4882]: Non UTF-8 locale (ANSI_X3.4-1968) is not supported!
 ```
 从这里看到，应该是locale设置不对然后导致的错误，即Gnome-Terminal只支持UTF-8的编码。所以这里只需要将locale设置合适即可。有下面两种方法：
-####1. 修改.bashrc或.zshrc
+#### 1. 修改.bashrc或.zshrc
 在.bashrc或.zshrc里面增加如下内容：
 ```bash
 # set LC
@@ -92,7 +92,7 @@ export LC_ALL=
 ```
 然后source下，删除之前的VNC会话，重新建立会话，查看是否正确。  
 
-####2. 修改系统的locale设置
+#### 2. 修改系统的locale设置
 如果你是管理员的话，可以修改系统的locale设置，使得所有用户都能正确地使用VNC。具体的代码如下：
 ```bash
 sudo update-locale LANG=en_US.UTF-8
@@ -113,10 +113,10 @@ sudo update-locale LC_ALL=
 ```
 这样操作后同样需要重新建立VNC会话。  
 
-###VNC连过去后，命令行字体挤在一起，看不清楚
+### VNC连过去后，命令行字体挤在一起，看不清楚
 这个原因也是因为locale设置的不对，设置了中文字体导致的问题，所以同样地，按照上面所说的更改locale的方法，更新locale即可。 
 
-###VNC中，按Tab不自动补全，而是跳转到别的Terminal窗口
+### VNC中，按Tab不自动补全，而是跳转到别的Terminal窗口
 这个问题的解决方法是实验室师兄提供的，打开`~/.config/xfce4/xfce-perchaannel-xml/xfce4-keyboard-shortcuts.xml`文件，将其中的
 ```xml
 <property name="&lt;Super&gt;Tab" type="string" value="switch_window_key"/>

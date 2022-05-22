@@ -57,7 +57,7 @@ CMake Error at 3rdparty/ippicv/downloader.cmake:73 (file):
 
 ### 2. 编译TSN
 TSN代码里面包含3个submodule，分别是opencv2.4.12, 提取光流的dense_flow和修改过的caffe caffe-action。我们这里已经编译过OpenCV，所以接下来编译dense_flow和caffe-action, 作者给出的`build_all.sh`执行会有些问题，我们可以参照这个文件的内容，自己一步步地编译各个部分。  
-####1. 编译dense_flow
+#### 1. 编译dense_flow
 dense_flow依赖于libzip-dev这个包，可以通过系统的包管理器安装。我本来是想自己编译的，但是编译后，在make dense_flow 的时候还是报错，最后还是让管理员老师装了这个包。 
 装完依赖后，开始执行cmake，使用`OpenCV_DIR`参数来设置OpenCV目录，指向我们自己刚才编译的OpenCV。
 ```bash

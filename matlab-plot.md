@@ -10,11 +10,11 @@ tags:
 <!--more-->
 
 
-##1. 设置plot
+## 1. 设置plot
 
 参考内容：<http://www.mathworks.com/help/matlab/ref/plot.html>
 
-###设置曲线形式(LineSpec)
+### 设置曲线形式(LineSpec)
 
 曲线形式包括3个部分，分别是`Line Style`，`marker symbol`和`color`。
 
@@ -57,7 +57,7 @@ tags:
  1. 这三个选项可以省略任意一个或多个，当省略`line style`且设定了`marker symbol`时，这时候得到的只有数据点，没有曲线。
  2. 如果Y值是一个矩阵的时候，如果设定了`color`选项，怎对所有曲线，颜色都是设定的那种颜色；如果没设定`color`,则曲线颜色按上面所示颜色顺序依次往下选择。
 
-###设置曲线宽度:LineWidth
+### 设置曲线宽度:LineWidth
 
 曲线宽度设置好也是很重要的，默认的曲线太细，不美观，我们可以使用LineWidth来设置，其单位为点的大小,比如
 
@@ -67,20 +67,20 @@ plot(x,y,'LineWidth',2)
 
 表示线宽是两倍的点大小。
 
-###设置标记大小:MarkerSize
+### 设置标记大小:MarkerSize
 
 标记大小表示前面设定的`marker symbol`的大小，单位为点的大小。
 
-###设置标记边缘颜色:MarkerEdgeColor
+### 设置标记边缘颜色:MarkerEdgeColor
 
 标记边缘颜色就是标记周围一圈的颜色。
 
-###标记填充颜色:MarkerFaceColor
+### 标记填充颜色:MarkerFaceColor
 
 标记填充颜色。
 
 
-##2. 设置网格Grid
+## 2. 设置网格Grid
 
 参考内容：
 
@@ -89,24 +89,24 @@ plot(x,y,'LineWidth',2)
 3. <http://www.mathworks.com/help/matlab/ref/axes-properties.html#prop_MinorGridLineStyle>
 4. <http://www.mathworks.com/help/matlab/ref/axes-properties.html#prop_GridAlpha>
 
-###显示/隐藏网格
+### 显示/隐藏网格
 
 1. grid on：显示网格
 2. grid off：隐藏网格
 
-###得到当前坐标轴Axis
+### 得到当前坐标轴Axis
 
 `ax = gca;`:得到当前坐标轴，其中`gca`意为get current axis，实际是一个函数，只不过后面没加括号而已。
 得到坐标轴后，就可以对图像进行一系列的设置。
 
-###设置网格线类型:GridLineStyle
+### 设置网格线类型:GridLineStyle
 
 ```matlab
 ax= gca;
 ax.GridLineStyle = ':'; %设置网格线为点线
 ```
 
-###设置网格线透明度：GridAlpha
+### 设置网格线透明度：GridAlpha
 
 默认透明度是0.15，可以使用GridAlpha来设置
 
@@ -115,9 +115,9 @@ ax = gca;
 ax.GridAlpha = 0.5 %设置透明度为0.5
 ```
 
-##3. 设置坐标轴
+## 3. 设置坐标轴
 
-###设置坐标轴范围
+### 设置坐标轴范围
 
 可以用`axis([xStart xEnd yStart yEnd])`这样一条命令来设置坐标轴的范围。
 
@@ -125,33 +125,33 @@ ax.GridAlpha = 0.5 %设置透明度为0.5
 axis([0.1 0.6 0.5 0.8]);%x轴从0.1到0.6，y轴从0.5到0.8
 ```
 
-###设置坐标轴跨度
+### 设置坐标轴跨度
 
 ```matlab
 set(gca, 'xtick',[xStart:xStep:xEnd]):设置x轴步长，从xStart开始，从xEnd结束，步长是xStep。
 set(gca, 'ytick',[yStart:yStep:yEnd]):同X轴。
 ```
 
-##4. 设置图标题和图中文字
+## 4. 设置图标题和图中文字
 
 参考内容：
 
 <http://www.mathworks.com/help/matlab/ref/legend.html>
 
-###设置图片标题：legend
+### 设置图片标题：legend
 
 ```matlab
 legend('figure1');
 ```
 
-###设置x/y轴坐标：x/ylabel
+### 设置x/y轴坐标：x/ylabel
 
 ```matlab
 xlabel('\alpha');
 ylabel('soccer');
 ```
 
-###设置图中文字：text
+### 设置图中文字：text
 
 使用方法：text(xPos, yPos,'str')
 
@@ -162,4 +162,3 @@ end
 ```
 
 上面代码表示在(x+0.1, y+0.3)处显示y的值
-

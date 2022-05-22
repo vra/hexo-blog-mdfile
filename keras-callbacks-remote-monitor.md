@@ -9,7 +9,7 @@ tags:
 ---
 ### 概述
 Keras提供了一系列的回调函数，用来在训练网络的过程中，查看网络的内部信息，或者控制网络训练的过程。`BaseLogger`、`ProgbarLogger`用来在命令行输出Log信息（默认会调用）， `EarlyStopping`、`ReduceLROnPlateu`分别用来提前终止训练和自动调整学习率，改变网络训练过程；而今天要介绍的`RemoteMonitor`则用来**实时**输出网络训练过程中的结果变化情况，包括训练集准确率(`accu`)、训练集损失值(`loss`)、验证集准确率(`val_acc`)、验证集损失值(`val_loss`)，用户也可以自己修改需要显示的数据。一图胜千言，看看下面的结果图吧：
-![](http://7xlt5t.com1.z0.glb.clouddn.com/keras_viz.png)
+![](/imgs/keras_viz.png)
 
 这个图是在浏览器中打开得到，Keras使用了Flask搭建了一个简单的服务器，然后采用D3.js来可视化数据。下面详细介绍可视化的过程吧
 <!--more-->

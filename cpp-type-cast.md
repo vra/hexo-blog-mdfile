@@ -13,9 +13,9 @@ tags:
 <!--more-->
 
 
-##几种字符串之间的转换
+## 几种字符串之间的转换
 
-###字符串类型介绍
+### 字符串类型介绍
 
 这里说的“字符串”包括`string`，'wstring'，'CString'。`string`是C++里面默认的字符串表示形式,`string`的实现使用了容器的概念，所以`string`类对象也有`begin()`，`end()`这些迭代方法。'wstring' 是保存宽字符（wide character，C++中有wchar_t类型来表示宽字符）的字符串。字符串常量在初始化'wstring'类型对象时，前面要加“L”，用以表明是宽字符串。'CString'是Windows平台下的特定的字符串，在MFC程序中使用广泛，但也可以在非MFC程序中使用，只要包括相应的头文件即可:'CString'在afx.h中定义，所以只需在程序中include <afx.h>就可以使用'CString'啦。
 
@@ -45,11 +45,9 @@ int main()
 
 要强调的是，\_AFXDLL的定义必须写在#include<afx.h>之前，否则会出现\_AFXDLL未定义的错误。
 
-
-###转换代码
+### 转换代码
 
 CString 可以用来表示所有字符，根据字符编码的不同，可以表示宽字符或者非宽字符。Windows使用了LPCTSTR来表示你的字符是否使用了UNICODE, 如果你的程序定义了UNICODE或者其他相关的宏，那么这个字符或者字符串将被作为UNICODE字符串，否则就是标准的ANSI字符串。贴代码：
-
 
 ```cpp
 
@@ -101,13 +99,12 @@ int main()
 }
 
 ```
-
 需要强调的是，从CString转换到wstring时，需要根据当前项目的编码方式来决定该用哪种转换方法（我在VS里面试了一下，默认是ANSI 环境）。
 
 
-##字符数组和字符串之间的转换
+## 字符数组和字符串之间的转换
 
-###const char\* 和char\*之间转换（const wchar_t\* 与 wchar_t\* 类似）
+### const char\* 和char\*之间转换（const wchar_t\* 与 wchar_t\* 类似）
 
 由于指针和数组相似的性质，下面统一用指针来陈述。
 
@@ -140,8 +137,7 @@ int main()
 
 ```
 
-###char\*和wchar_t\*之间的转换
-
+### char\*和wchar_t\*之间的转换
 `char*`和`wchar_t*`之间的转换我很少用到，这里还是从网上找了出来，列举如下：
 
 ```cpp
@@ -169,7 +165,7 @@ int main()
 
 ```
 
-###char\* 和 string的转换（wchar_t\* 和 wstring转换同理）
+### char\* 和 string的转换（wchar_t\* 和 wstring转换同理）
 
 `char*` 转化为`string`时会进行默认类型转换，即不需要显式地转换。而`string`转换为`const char*` 比较容易，要转换为`char*`比较麻烦，要进行内存的复制，如下：
 
@@ -201,15 +197,15 @@ int main()
 }
 ```
 
-###wchar_t\*和string，char\* 和wstring之间的转换
+### wchar_t\*和string，char\* 和wstring之间的转换
 这一类的转换我没遇到过，但我想利用前面的这些转换方法，通过使用一个中间格式，可以完成转换，所以就再没有查这部分的转换。
 
 
-##字符串和别的数据类型之间的转换
+## 字符串和别的数据类型之间的转换
 
 这部分总结下字符串类型和int，float这些类型转换时的一些方法。
 
-###char\* 和int，float类型转换
+### char\* 和int，float类型转换
 这方面有三种选择：`atoi`（对float类型是`atof`）， `sscanf`和`strtol`（对float类型，是`strtof`）。[StackOverFlow上的这个回答](http://stackoverflow.com/questions/3420629/convert-string-to-integer-sscanf-or-atoi)详细的解释了三者的区别，总体来说`atoi`速度最快，但出错时没有提示，`sscanf`可以通过类似`scanf`的方式来读取，`strtol`最安全，错误提示也多，但默认是将`char*` 转换为`long int`(函数名的含义：`str to long`)。三种代码如下：
 
 ```cpp
@@ -252,7 +248,7 @@ int main()
 }
 ```
 
-###string 和int，float类型之间的转换
+### string 和int，float类型之间的转换
 
 `string`和`int`，`float`之间的转换要用到 `stringstream`，或者`ostringstream`和`istringstream`。  
 
@@ -306,10 +302,9 @@ int main()
 
      return 0;
 }
-
 ```
 
-##参考内容
+## 参考内容
 
 基本都是StackOverFlow的链接……
 

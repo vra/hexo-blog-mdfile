@@ -11,7 +11,7 @@ tags:
 ![](http://www.openmp.org/wp-content/uploads/openmp-menu-logo.jpg)
 
 <!--more-->
-##概述
+## 概述
 OpenMP是基于共享存储体系的基于线程的并行编程模型。一个共享存储的进程由多个线程组成，而OpenMP就是基于已有线程的共享编程范例。  
 在OpenMP中，线程的并行化是由编程人员控制的，不是自动编程模型，而是外部变成模型。  
 OpenMP采用**Fork-Join**并行执行模型。即程序开始于一个单独的主线程，主线程会一直串行地执行，遇到第一个并行域，通过如下过程完成并行操作：  
@@ -51,7 +51,7 @@ hello from thread2
 ```
 可以看到，各个线程执行的顺序是无序的。  
 
-##核心知识
+## 核心知识
 下面记录使用OpenMP的一些核心点。  
  1. 包含头文件`omp.h`
  2. 所有并行块由`#pragma omp`开头的编译制导语句来开始，在代码块周围要有大括号
@@ -64,7 +64,7 @@ hello from thread2
  9. 通过`omp_get_thread_num`来获取当前线程的编号
  10. 通过`omp_get_num_threads`来获取线程总数
 
-##一个例子
+## 一个例子
 这里举一个更完善的例子来说明。  
 ```cpp
 #include <iostream>
@@ -142,5 +142,5 @@ int main(int argc, char** argv)
 
 ```
 
-##参考文献
+## 参考文献
 并行计算——结构，算法，编程（第3版），陈国良

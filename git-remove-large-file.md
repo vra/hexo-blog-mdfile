@@ -81,7 +81,7 @@ $ git rev-list --objects --all |grep 705d52
 我们需要从commit历史中找到所有修改该文件的commit然后修改这些commit。这里我们使用`git log`来操作，具体如下：
 ```bash
 git log --pretty=online -- <file-name>
-``` 
+```
 以`data/model-400M.caffemodel`文件为例，这个命令的具体形式为：
 ```bash
 $ git log --pretty=oneline -- data/model-400M.caffemodel

@@ -84,7 +84,7 @@ DEPS=hellomake.h
 ```
 Where `$@` indicates the `.o` file and `@<` indicates the corresponding `.c` file.
 
-##Other skills
+## Other skills
 1.	comments begin with `#`, just like shell
 2.	the comment begin with `@` will not be display, so we can echo like this:
 ```bash
@@ -95,7 +95,7 @@ Where `$@` indicates the `.o` file and `@<` indicates the corresponding `.c` fil
 5.	We can use `include` to add other makefiles into here, for example: `include Makefile1 Makefile2`.
 6.	Add `-` in front of a command will ignore the errors occurring when execute it. 
 
-##Reference:
+## Reference:
 1.	<https://www.gnu.org/software/make/manual/html_node/>
 2.	<http://blog.csdn.net/haoel/article/details/2886>
 3.	<http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/>

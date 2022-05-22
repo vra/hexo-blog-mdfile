@@ -16,10 +16,10 @@ matplotlib中，frontend就是我们写的python代码，而backend就是负责�
 
 ### backend的类别
 backend又分为两类，一类是`interface backend`，又叫做`interactive backend`，这一类是表示跟显示到屏幕相关的后端；另一类是`hardcopy backend`，又叫做`non-interactive backend`，这一类是写入到文件相关的后端。下面两图分别是non-interactive backend和interactive backend的具体值：
-![non-interactive backend](http://7xlt5t.com1.z0.glb.clouddn.com/non-iteractive-backend.png)
+![non-interactive backend](/imgs/non-iteractive-backend.png)
 
 
-![interactive backend](http://7xlt5t.com1.z0.glb.clouddn.com/iteractive-backend.png)
+![interactive backend](/imgs/iteractive-backend.png)
 在python中，可以通过如下的命令来获取当前机器支持的这两种后端：
 ```python
 import matplotlib
@@ -33,7 +33,7 @@ matplotlib.rcsetup.all_backends # 获取 所有 backend
 
 ### 设置backend
 有4种方式可以来设置matplotlib的backend，而且下列越后面的设置方式，优先级越高，也就是后面的设置会覆盖前面的设置。  
-####1. 通过设置`matplotlibrc`的配置文件来设置
+#### 1. 通过设置`matplotlibrc`的配置文件来设置
 注意`matplotlibrc`文件不一定在你的家目录下，可以通过如下命令来获取其存放位置:
 ```python
 import matplotlib
@@ -47,7 +47,7 @@ backend : WXAgg   # use wxpython with antigrain (agg) rendering
 其中`WXAgg`可以换成任意的你的系统支持的backend类型。  
 **注意：在backend的名字中是不区分大小写的，所以`Qt4Agg`和`qt4agg`是等价的。**
 
-####2. 通过`MPLBACKEND`环境变量来设置backend
+#### 2. 通过`MPLBACKEND`环境变量来设置backend
 下面两种方式都可以:
 ```bash
 ## 方式1. 先export MPLBACKEND在执行python文件
@@ -58,14 +58,14 @@ $ python works.py
 $ MPLBACKEND='Agg' python works.py
 ```
 
-####3. 通过`-d`选项来设置
+#### 3. 通过`-d`选项来设置
 使用方法如下：
 ```bash
 $ python script.py -dbackend
 ```
 因为这种方式很容易和脚本内部的参数解析冲突，所以不建议使用这种方式，而是通过`MPLBACKEND`参数的方式2来设置。
 
-####4. 通过`matplotlib.use()`函数来设置
+#### 4. 通过`matplotlib.use()`函数来设置
 使用方式如下：
 ```python
 import matplotlib as mpl
@@ -73,7 +73,7 @@ mpl.use('Agg')
 ```
 **再次提醒下，注意这4种方式的优先级：4>3>2>1，后面的设置会覆盖前面的设置。**
 ### 解决问题
-####1. GPU集群执行`import matplotlib.pyplot as plt`的错误
+#### 1. GPU集群执行`import matplotlib.pyplot as plt`的错误
 错误信息可能如下：
 ```bash
 ** (test_net_multi.py:23890): WARNING **: Could not open X display
@@ -147,7 +147,7 @@ cd /data10/yunfeng/Dev/tsn
 MPLBACKEND=Agg python v_test_60k.py 2>&1 |tee ~/logs/v_test_60k.log
 ```
 
-####2. GPU服务器上使用matplotlib显示图片
+#### 2. GPU服务器上使用matplotlib显示图片
 由于服务器没有安装图形化显示界面，所以使用默认的matplotlib设置会有一些问题，图片没法正常显示。解决方法是在python文件中增加如下两行：
 ```python
 import matplotlib as mpl

@@ -7,7 +7,7 @@ tags:
 
 [C3D](https://github.com/facebook/C3D) is a deep learning tool which is modified version of BVLC [caffe](https://github.com/BVLC/caffe) to support 3D convolution and pooling. it was released by Facebook. In the field of human action recognition, C3D feature of video clip is the state-of-the-art feature. In this blog, I write some notes for using this tool in practice.  
 <!--more-->
-##1. Compile C3D
+## 1. Compile C3D
  1. Clone C3D from github:
  ```
  git clone https://github.com/facebook/C3D.git
@@ -31,7 +31,7 @@ sh c3d_sport1m_feature_extraction_frm.sh
  ```
  		If the command above runs correctly, your compilation is successful!  
 
-##2. Use C3D to extract feature of UCF101 video dataset
+## 2. Use C3D to extract feature of UCF101 video dataset
  1. Get the dataset and write list files
  	First download UCF101 dataset from <http://crcv.ucf.edu/data/UCF101.php>, and then write list files.
   
@@ -94,9 +94,9 @@ sh c3d_sport1m_feature_extraction_frm.sh
 	conv3d_deepnetA_sport1m_iter_1900000 0 50 1 
 	prototxt/output_list_prefix.txt fc7­1 fc6­1 prob 
  ```
- 	After extraction of feature, we can use matlab code in `script` subdirectory of `example/c3d_feature_extraction` to do further job. There are two matlab files in `script`, `read_binary_blob.m`, `read_binary_blob_preserve_shape.m`. There are used to transform features into binary blob data, We can use these two functions for further analysis of features.
+ After extraction of feature, we can use matlab code in `script` subdirectory of `example/c3d_feature_extraction` to do further job. There are two matlab files in `script`, `read_binary_blob.m`, `read_binary_blob_preserve_shape.m`. There are used to transform features into binary blob data, We can use these two functions for further analysis of features.
 
-##3. Train 3D convolution neural network
+## 3. Train 3D convolution neural network
 Since C3D is a fork of [Caffe](http://github.com/bvlc/caffe.git), which is a fast open framework for deep learning, We can use C3D to train deep networks. You can train from scratch or fine-tune C3D on your own dataset.
  1.	Train from scratch
 

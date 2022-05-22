@@ -5,10 +5,10 @@ tags:
  - lmdb
  - leveldb
 ---
-###概述
+### 概述
 Caffe里面的一种数据存储和读取方式是使用数据库格式，将数据保存到特定的一个数据库文件中，然后在代码里面整个读入这个数据库文件。Caffe支持的数据库格式包括lmdb和leveldb，可能很多人是因为caffe才知道这两个库的，但其实这两个库也是非常出名的工具。下面就展示下在Caffe里面用Python接口调用生成的LMDB或者LEVELDB格式的文件的代码吧。
 <!--more-->
-###LMDB 操作方式
+### LMDB 操作方式
 具体方式见如下代码:
 ```python
 import lmdb
@@ -35,7 +35,7 @@ data = caffe.io.datum_to_array(datum)
 print data.shape
 ```
 
-###LEVELDB 操作方式：
+### LEVELDB 操作方式：
 
 ```python
 import leveldb

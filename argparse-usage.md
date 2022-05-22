@@ -9,7 +9,7 @@ argparse使用比较简单，常用的功能可能较快地实现出来，下面
 <!--more-->
 
 ### 1. 基本框架
-下面是使用argparser从命令行获取用户名，然后打印'Hello '+ 用户名，假设python文件名为`print_name.py`:
+下面是使用argparse从命令行获取用户名，然后打印'Hello '+ 用户名，假设python文件名为`print_name.py`:
 ```python
 # file-name:print_name.py
 import argparse
@@ -32,7 +32,7 @@ if __name__ == '__main__':
 $ python print_name.py --name Wang
 Hello Wang
 ```
-上面的代码段中，我们显示引入了`argparser`包，然后通过`argparser.ArgumentParser`函数生成argparser对象，其中这个函数的`description`函数表示在命令行显示帮助信息的时候，这个程序的描述信息。之后我们通过对象的`add_argument`函数来增加参数。这里我们只增加了一个`--name`的参数，然后后面的`default`参数表示如果没提供参数，我们默认采用的值。即如果像下面这样执行命令：
+上面的代码段中，我们显示引入了`argparse`包，然后通过`argparse.ArgumentParser`函数生成argparse对象，其中这个函数的`description`函数表示在命令行显示帮助信息的时候，这个程序的描述信息。之后我们通过对象的`add_argument`函数来增加参数。这里我们只增加了一个`--name`的参数，然后后面的`default`参数表示如果没提供参数，我们默认采用的值。即如果像下面这样执行命令：
 ```bash
 $ python print_name.py 
 ```

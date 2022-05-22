@@ -21,9 +21,9 @@ tags:
 ### Second-order pooling
 在CNN结构中，pooling层我们一般采用mean pooling或者max pooling，这两者都是一阶pooling (first-order pooling)， 因为mean和max操作都是对feature map进行一阶操作。而second-order pooling，顾名思义，就是对feature map进行二阶操作的pooling，而这里的二阶操作，根据论文[1]中的说明，是通过feature map中的每个向量与自身的转置求外积来实现的。second-order pooling也有mean和max之分，如下面的图所示:
 
-![Second-order mean pooling, 摘自 论文[1]](http://7xlt5t.com1.z0.glb.clouddn.com/o2p_mean.png)
+![Second-order mean pooling, 摘自 论文[1]](/imgs/o2p_mean.png)
 
-![Second-order max pooling, 摘自 论文[1]](http://7xlt5t.com1.z0.glb.clouddn.com/o2p_max.png)
+![Second-order max pooling, 摘自 论文[1]](/imgs/o2p_max.png)
 
 一个很显然的问题是，second-order pooling比first-order pooling计算量要大，因为实际实现的时候，second-order pooling须用到矩阵相乘，计算量自然比矩阵求max或求mean要大。既然如此，那会为什么还有人用second-order pooling呢？这是因为研究者发现在语义分割和细分类问题中，二阶pooling效果更好，因此为了效果提升，在某些情况下增加一些计算量还是值得的。  
 
@@ -31,34 +31,34 @@ tags:
 ### Second-order pooling的低秩近似
 对于二分类问题，作者推导出了采用second-order pooling后输出score的计算形式，如下： 
 
-![eq. 2](http://7xlt5t.com1.z0.glb.clouddn.com/eq2.png)
+![eq. 2](/imgs/eq2.png)
 然后，对权重矩阵`W`进行秩为1的近似，将其表示为2个向量`a`和`b`的转置的乘积，则经过如下的推导可以得出公式如下： 
 
-![eq. 3 - eq. 6](http://7xlt5t.com1.z0.glb.clouddn.com/eq3_6.png)
+![eq. 3 - eq. 6](/imgs/eq3_6.png)
 其中公式 (4) 利用了迹的性质：`tr(ABC) = tr(CAB) = tr(BCA)`，公式 (5) 利用了性质：`标量的迹等于标量本身`。 进一步，公式 (6) 还可以调整为如下形式： 
 
-![eq. 7 - eq. 8](http://7xlt5t.com1.z0.glb.clouddn.com/eq7_8.png)
+![eq. 7 - eq. 8](/imgs/eq7_8.png)
 可以看到，最后的得分可以分成两部分，前一部分是输入feature map `X`与向量`a`的乘积的转置，第二部分是输入feature map `X`和向量`b`的乘积。
 
 
 ### Top-down attention 和 bottom-up attention
 以上公式推导是针对二分类问题的，对于多分类问题，只需要将参数`W`变为针对每个类不同的`Wk`即可，公式如下：
 
-![eq. 9](http://7xlt5t.com1.z0.glb.clouddn.com/eq9.png)
+![eq. 9](/imgs/eq9.png)
 
 对输入`X`，计算所有的`score(X, k), k=1, 2, ..., N，N为类别数`，寻找最大的score值，对应的`k`即为predict的类别。  
 同时，对`Wk`也可以进行一阶的近似，将其表示为`Wk = ak * b`，注意`ak`表示向量`a`是跟`k`有关的，而向量`b`是与类别`k`无关，因此公式 (8) 可以写成下面形式：
-![eq. 10](http://7xlt5t.com1.z0.glb.clouddn.com/eq10.png)
+![eq. 10](/imgs/eq10.png)
 
 其中`tk`项是top-down attention而`h`项是bottom-up attention。作者这样分，也是受一篇2006年CVPR论文的启发，从下面的摘要可以看出(怀念750张图片就可以发CVPR的时代……)， top-down attention 是用目标驱动的方式来进行visual search，而 bottom-up 则是根据图像的显著性信息来进行visual search，这种分类方式也是受到人类视觉系统的启发。  
 
-![abstract of "An Integrated Model of Top-Down and Bottom-Up Attention for Optimizing Detection Speed"](http://7xlt5t.com1.z0.glb.clouddn.com/750_cvpr.png)
+![abstract of "An Integrated Model of Top-Down and Bottom-Up Attention for Optimizing Detection Speed"](/imgs/750_cvpr.png)
 以上介绍的 top-down attention 和 bottom-up attention 合在一起就是 attentional pooling 的实现方式。
 
 
 ### Pose-regularized attention
 除了提出 attentional pooling， 作者还提出利用人体姿态关键点对attention进行约束，实现方式就是在之前网络最后加了2个MLP来预测17通道的heat map，其中16个通道时人体姿态关键点，而最后一个通道是 bottom-up attention 的 feature map， 如下图右侧中的method 2所示。 通过最小化姿态关键点的loss和 attentional pooling的loss 的加权和，使得最后的网络更好地收敛到对应的动作类别。 
-![Framework](http://7xlt5t.com1.z0.glb.clouddn.com/fig1.png)
+![Framework](/imgs/fig1.png)
 
 
 ### 实验数据集说明

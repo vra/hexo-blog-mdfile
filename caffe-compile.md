@@ -4,7 +4,7 @@ tags:
 - Caffe
 - Deep Learning
 ---
-##Issue 1
+## Issue 1
 When I compile caffe toolkit(actually, a caffe fork: lisa-caffe-public), I always encounter some errors like:
 ```bash
 Tab found; better use space
@@ -27,7 +27,7 @@ EVERYTHING_TARGETS := all py$(PROJECT) test warn lint
 Explain: `EVERYTHING_TARGETS` is target of command `make everything`. When compile caffe, we can just type `make everything` then gcc will do everything for us, including `make all`, `make test`, `make warn`, `make lint`.  
 So finally I got the simplest solution: just remove `lint` from this line and recompiled it. This time everything went well.
 
-##Issue 2
+## Issue 2
 When I train network using lisa-caffe-public, I encounter error:
 ```bash
 Unknown layer type: Python
@@ -35,7 +35,7 @@ Unknown layer type: Python
 I searched about this question and found the answer [here](https://github.com/rbgirshick/fast-rcnn/issues/31): **uncomment WITH__PYTHON_LAYER: =1 in Makefile.config and recompile it.**   
 lisa-caffe-public is a fork of fast-rcnn, which is a fork of original caffe of BVLC. The developer of fast-rcnn use `Python layer` in his implementation and lisa's caffe fork inherits it. In order to run the network correctly, we must use the flag when compiling the source code.  
  
-##Issue 3
+## Issue 3
 Error message like this:
 ```bash
  fatal error: caffe/proto/caffe.pb.h: No such file or directory
@@ -49,7 +49,7 @@ $ mv src/caffe/proto/caffe.pb.h include/caffe/proto
 Then compile again and we have the question solved.
 Reference from [here](https://github.com/NVIDIA/DIGITS/issues/105)
 
-##Issue 4
+## Issue 4
 Error message like this:
 ```bash
 Check failed: proto.SerializeToOstream(&output)
@@ -62,7 +62,7 @@ This error happens when write snapshot to disk. There are three reasons that cau
 You can check these 3 aspects.
 Reference: <https://github.com/BVLC/caffe/issues/1394>
 
-##Issue 5
+## Issue 5
 When use [fast R-CNN](https://github.com/rbgirshick/fast-rcnn), got error like this:
 ```bash
 Floating point exception(core dumped).
@@ -70,5 +70,5 @@ Floating point exception(core dumped).
 It's like something about box size. the solution is add `filter_roidb` function in `lib/fast_rcnn/train.py` file, like [here](https://github.com/rbgirshick/py-faster-rcnn/blob/d66cc2bff142ca07f521db06ca3e9e10dbc8df20/lib/fast_rcnn/train.py#L127).  
 Reference: <https://github.com/rbgirshick/py-faster-rcnn/issues/159>
 
-##Issue 6
+## Issue 6
 

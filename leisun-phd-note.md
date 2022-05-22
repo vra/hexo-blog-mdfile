@@ -72,7 +72,7 @@ b.歧义性：有的特征即可以认为是正样本，也可认为是负样本
 
 &nbsp;
 
-[![example_picture](https://vra.blog.ustc.edu.cn/wp-content/uploads/2015/03/example_picture.jpg)](https://vra.blog.ustc.edu.cn/wp-content/uploads/2015/03/example_picture.jpg)
+[![example_picture](/uploads/2015/03/example_picture.jpg)](/uploads/2015/03/example_picture.jpg)
 
 **4.算法缺陷：**
 

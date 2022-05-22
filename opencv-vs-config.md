@@ -118,4 +118,4 @@ int main()
 
 出来的图像：
 
-![](https://vra.blog.ustc.edu.cn/wp-content/uploads/2015/04/lena.png)
+![](/uploads/2015/04/lena.png)

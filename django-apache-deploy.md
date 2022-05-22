@@ -6,10 +6,10 @@ tags:
  - Apache
  - Web编程
 ---
-###0.概述
+### 0.概述
 Django是一个基于Python的web开发框架，在实际生产环境中部署的时候，还需要用Apache容器来部署。这里记录下如何在Debian系统中用Aapche和[mod_wsgi模块](https://pypi.python.org/pypi/mod_wsgi)来部署Django项目。
 <!--more-->
-###1.系统信息
+### 1.系统信息
 ```bash
 $ uname -a  
 Linux iZ284ov0vfwZ 3.2.0-4-amd64 #1 SMP Debian 3.2.81-1 x86_64 GNU/Linux  
@@ -24,7 +24,7 @@ Server version: Apache/2.2.22 (Debian)
 Server built:   Aug 18 2015 09:49:50  
 ```
 **我用的是Debian发行版，Apache的配置与别的发行版有较大不同，这里以Debian为例进行说明，别的发行版需要进行一定的修改。**
-###2. 安装Django和Apache
+### 2. 安装Django和Apache
 Django可以通过如下命令安装:
 ```bash
 sudo pip install Django==1.9.0 #设置版本号为1.9.0
@@ -33,7 +33,7 @@ sudo pip install Django==1.9.0 #设置版本号为1.9.0
  ```bash
  sudo apt-get install apache2
  ```
-###3. 安装mod_wsgi模块
+### 3. 安装mod_wsgi模块
 mod_wsgi可以通过pip安装，但是需要提前在系统安装`apache-dev`包，但是在Debian发行版上，这个包名叫`apache2-prefork-dev`，详情参考[这里](http://stackoverflow.com/a/16869017/2932001)。通过如下命令安装
 ```bash 
 sudo apt-get install apache2-prefork-dev
@@ -60,7 +60,7 @@ sudo make install
 如果要使用python3,则`./configure`那条命令改为`./configure --with-python=/usr/bin/python3.4`。
 如果没有报错，那么mod_wsgi就编译好了!
 **编译好后，会在apache的模块目录`/usr/lib/apache2/modules/`生成mod_wsgi.so文件。**
-###4.Apache配置文件目录结构
+### 4.Apache配置文件目录结构
 Apache的配置文件目录是`/etc/apache2`，该目录下的文件结构如下：
 ```bash
 .
@@ -80,7 +80,7 @@ Apache的配置文件目录是`/etc/apache2`，该目录下的文件结构如下
 剩下的6个目录两两一对，`availabel`文件夹里面是所有的配置，而`enabled`目录里面则是启用的配置。而`conf`、`mods`和`sites`可以分别通过命令`a2enconf`、`a2enmod`、`a2ensite`来启用，启用后会在`enabled`目录下生成一个软链接，指向`available`目录下的同名文件。  
 在`apache2.conf`这个文件最后，是一些`IncludeOptional` 语句，用来将`conf-enabled`、`mods-enabled`、`sites-enabled`目录下的配置文件包含到主配置文件中。这样的好处是每个配置文件配置一个条目，比较清晰明了,易于查错。    
 
-###5. 启用wsgi模块
+### 5. 启用wsgi模块
 我们需要在`mods-available`目录下新建`mod_wsgi`的load文件，具体操作如下:
 ```bash
 cd /etc/apache2/mod-available  
@@ -89,10 +89,10 @@ sudo a2enmod wsgi # 启用wgsi配置
 sudo service apache2 restart # 重启Apache2服务
 ```
 
-###6. 托管Django站点
+### 6. 托管Django站点
 假设Django项目的`wsgi.py`文件的路径是`/home/yunfeng/Dev/git/mysite/mysite/wsgi.py`，我们需要下面几步来完成Apache对Django项目的托管：
 
-####1. 修改Django项目中的`wsgi.py`和`settings.py`文件
+#### 1. 修改Django项目中的`wsgi.py`和`settings.py`文件
 修改`wsgi.py`文件，增加如代码中说明的那几行：
 ```py
 """                                                                                                                                                           
@@ -126,7 +126,7 @@ application = get_wsgi_application()
  3. 将`TEMPALTES`中的`DIRS`改写成指向模板目录的绝对路径
 Django项目里面需要修改的就这2个文件，下面的内容都是在`/etc/apache2`目录下进行操作。  
 
-####2. 在/etc/apache2/sites-available目录下增加网站的配置文件
+#### 2. 在/etc/apache2/sites-available目录下增加网站的配置文件
 参照该目录下的`000-default.conf`和Django的教程，写出配置文件mysite.conf如下：
 ```bash
   <VirtualHost *:8000>                                                                                                                                         
@@ -165,7 +165,7 @@ Django项目里面需要修改的就这2个文件，下面的内容都是在`/et
 sudo a2ensite mysite.conf
 ```
 
-####3. 修改/etc/apache2目录下的ports.conf文件
+#### 3. 修改/etc/apache2目录下的ports.conf文件
 增加针对新建站点的端口号的监听：
 ```bash
 Listen 80

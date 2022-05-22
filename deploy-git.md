@@ -5,7 +5,7 @@ tags:
  - Linux
 ---
 相信很多人都对GitHub和GitLab很熟悉了，这些基于Git版本控制的在线代码托管平台由于丰富的内容，简洁的操作和集成一体化以及风靡全球了。今天我好奇，想了解下如何搭建自己的Git服务器，于是查了一些资料，记录下整个的流程。
-![](http://7xlt5t.com1.z0.glb.clouddn.com/git_logo.png)
+![](/imgs/git_logo.png)
 <!-- more-->
 ### 为什么要用自己的Git服务器？
 想了想，有下面的优势：
