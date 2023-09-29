@@ -6,6 +6,24 @@ tags:
 - 总结
 ---
 
+## 更新 (2023-09-29)
+利用f-string可以简化当前日期str的构造，不需要使用`strftime`等函数了：
+```python
+from datetime import datetime
+
+now = datetime.now()
+
+str1 = f'{now:%y-%m-%d-%H:%M:%S}'
+str2 = '{:%y-%m-%d-%H:%M:%S}'.format(now)
+print(str1)
+print(str2)
+```
+输出入下:
+```bash
+23-09-29-09:50:07
+23-09-29-09:50:07
+```
+
 ## 1. 引入
 我有一个朋友，某天突然问我：你知道下面的Python语句什么含义，结果是多少吗？
 ```python
