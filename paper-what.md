@@ -1,7 +1,7 @@
 title: What Makes a Video a Video Analyzing Temporal Information in Video Understanding Models and Datasets 论文阅读
 date: 2018-04-14 22:14:00
 tags:
- - Action Recogntion
+ - Action Recognition
  - CNN
  - Deep Learning
  - C3D

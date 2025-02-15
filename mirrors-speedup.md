@@ -3,7 +3,7 @@ date: 2018-04-18 15:53:35
 tags:
  - Linux
  - Python
- - Pip
+ - pip
  - Docker
  - NPM
 ---

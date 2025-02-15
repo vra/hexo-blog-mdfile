@@ -1,7 +1,7 @@
 title: C3D Usage Summary 
 date: 2016-03-03 17:34:05
 tags:
- - DeepLearning
+ - Deep Learning
  - Caffe
 ---
 

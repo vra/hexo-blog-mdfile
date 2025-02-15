@@ -1,7 +1,7 @@
 title: TSN Usage——如何编译和使用temporal-segment-networks
 date: 2017-03-31 09:47:23
 tags:
- - Action Recongnition
+ - Action Recognition
  - CNN
  - TSN
  - GitHub

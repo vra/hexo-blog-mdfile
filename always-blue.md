@@ -2,7 +2,7 @@
 title: Always blue——关于《硅谷》电视剧的一些想法
 date: 2019-12-16 23:22:03
 tags:
- - 杂项
+ - 杂谈
  - Programmer
 ---
 

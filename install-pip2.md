@@ -3,7 +3,7 @@ title: 你不应该知道的知识之如何在Ubuntu 16.04上安装Pip2
 date: 2019-09-07 22:27:02
 tags:
  - Python
- - Pip
+ - pip
  - Ubuntu
 ---
 ## 概述

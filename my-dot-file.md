@@ -2,7 +2,7 @@
 title: my-dot-file
 date: 2019-05-07 16:58:13
 tags:
- - 总计
+ - 总结
  - Linux
 ---
 

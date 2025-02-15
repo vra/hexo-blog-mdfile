@@ -2,7 +2,7 @@ title: OpenMP并行编程简介
 date: 2016-06-17 21:49:56
 tags:
  - 并行计算
- - C/C++
+ - C++
  - OpenMP
 ---
 

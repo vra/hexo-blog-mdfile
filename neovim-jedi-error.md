@@ -3,7 +3,7 @@ title: neovim/vim 中遇到jedi-vim 插件报错解决
 date: 2021-11-06 14:45:03
 tags:
 - Python
-- neovim
+- NeoVim
 - 总结
 - 错误汇总
 ---

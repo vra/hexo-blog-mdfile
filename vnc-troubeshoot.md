@@ -3,7 +3,7 @@ date: 2017-07-28 20:37:49
 tags:
  - Linux
  - Ubuntu
- - Vnc
+ - VNC
  - Xfce
  - Gnome
  - 总结

@@ -2,7 +2,7 @@
 title: NumPy的C++替代NumCpp使用教程
 date: 2020-12-26 11:26:36
 tags:
- - NumPy
+ - Numpy
  - NumCpp
  - C++
 ---

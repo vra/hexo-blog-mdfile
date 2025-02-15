@@ -2,7 +2,7 @@ title: 论文阅读：A Closer Look at Spatiotemporal Convolutions for Action Re
 date: 2018-03-23 23:39:59
 tags:
  - 3D CNN
- - Action Recogntion
+ - Action Recognition
  - Deep Learning
 
 ---
